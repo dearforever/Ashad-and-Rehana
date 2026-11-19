@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Wedding Invitation — Ashad weds Rehana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wine:#4a0712;
+  --deep:#1c0306;
+  --gold:#d8b46a;
+  --gold2:#f3dca0;
+  --cream:#f6ecd9;
+  --ease:cubic-bezier(.65,.02,.2,1);
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --script:"Pinyon Script","Snell Roundhand",cursive;
+  --cin:"Cinzel",Georgia,serif;
+  --arabic:"Amiri",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--deep);color:var(--cream);font:400 1.15rem/1.6 var(--serif);overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom)}
+body.lock{overflow:hidden;height:100svh}
+button,a.btn{font:600 .8rem var(--cin);letter-spacing:.2em;text-transform:uppercase;color:var(--deep);background:linear-gradient(135deg,var(--gold2),var(--gold) 55%,#a67c33);border:0;border-radius:12px;padding:1rem 1.6rem;min-height:48px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;transition:transform .3s,box-shadow .3s}
+button:hover,a.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px #d8b46a44}
+:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+
+/* ENTRANCE OVERLAY */
+#intro{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.35);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s ease}
+#intro.done{opacity:0;pointer-events:none}
+#cue{background:none;border:0;color:var(--gold2);font:400 1rem var(--cin);letter-spacing:.35em;text-transform:uppercase;text-shadow:0 2px 12px #000;display:flex;flex-direction:column;align-items:center;outline:none;cursor:pointer}
+#cue i{display:block;width:62px;height:62px;margin:0 auto 16px;border:1px solid #f3dca0;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(.8);opacity:1}100%{transform:scale(1.5);opacity:0}}
+#skip{position:absolute;top:max(14px,env(safe-area-inset-top));right:14px;z-index:101;padding:.6rem 1rem;min-height:44px;background:rgba(0,0,0,0.5);color:var(--gold2);border:1px solid #d8b46a88;border-radius:10px;font-size:0.75rem}
+
+/* HERO SECTION WITH VIDEO BACKGROUND */
+#hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 1.5rem;overflow:hidden;background:#1c0306}
+#bg-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:top center;z-index:1}
+#hero-content{position:relative;z-index:3;width:100%;display:flex;flex-direction:column;align-items:center;opacity:0;transition:opacity 1.5s ease;margin-top:10vh}
+#hero-content.show{opacity:1}
+
+.bismillah-hero{font:700 clamp(1.35rem,5.5vw,2.2rem)/1.6 var(--arabic);color:var(--gold2);text-shadow:0 3px 14px rgba(0,0,0,0.95);margin-bottom:.35rem;direction:rtl}
+.eyebrow{font:400 clamp(.7rem,2.6vw,.9rem) var(--cin);letter-spacing:.35em;text-transform:uppercase;color:var(--gold);text-shadow:0 2px 8px rgba(0,0,0,0.85)}
+.names{font:400 clamp(3.3rem,16vw,8rem)/1 var(--script);color:var(--gold2);margin:.15em 0;text-shadow:0 3px 15px rgba(0,0,0,0.92)}
+.names span{display:block}
+.names em{display:block;font:italic 400 clamp(1.3rem,5.5vw,2.2rem) var(--serif);color:var(--gold);margin:.12em 0;letter-spacing:.12em}
+.date{font:600 clamp(.95rem,4vw,1.4rem) var(--cin);letter-spacing:.28em;margin:1rem 0 1.8rem;text-shadow:0 2px 10px rgba(0,0,0,0.92)}
+.rv{opacity:0;transform:translateY(24px);filter:blur(6px);transition:opacity 1.2s,transform 1.2s,filter 1.2s;transition-delay:calc(var(--d,0)*.28s)}
+.in .rv,.rv.in{opacity:1;transform:none;filter:none}
+.scrollcue{position:absolute;bottom:calc(22px + env(safe-area-inset-bottom));font:.7rem var(--cin);letter-spacing:.3em;color:var(--gold);opacity:.85;z-index:3;text-shadow:0 2px 8px #000}
+
+/* SECTIONS */
+section{padding:clamp(4rem,11vw,7.5rem) 1.5rem;text-align:center;position:relative}
+.alt{background:linear-gradient(var(--deep),var(--wine) 50%,var(--deep))}
+.wrap{max-width:780px;margin:0 auto}
+h2{font:400 clamp(2.3rem,9.5vw,4.3rem)/1.12 var(--script);color:var(--gold2);margin-bottom:.8rem}
+.orn{display:block;margin:1rem auto 1.6rem;width:200px;height:16px;background:linear-gradient(90deg,#0000,var(--gold),#0000) center/100% 1px no-repeat}
+.orn::after{content:"✦";color:var(--gold2);display:block;font-size:15px;line-height:16px;background:var(--deep);width:32px;margin:0 auto}
+.alt .orn::after{background:#34050d}
+
+/* BISMILLAH & GRANDPARENTS BLESSING CARD */
+.blessing-card{border:1px solid #d8b46a66;background:linear-gradient(180deg,rgba(0,0,0,0.42),rgba(74,7,18,0.32));border-radius:28px;padding:clamp(2rem,6vw,3.2rem) clamp(1.2rem,5vw,2.5rem);position:relative;box-shadow:0 16px 40px rgba(0,0,0,0.45)}
+.bismillah-lg{font:700 clamp(1.7rem,6.5vw,2.8rem)/1.7 var(--arabic);color:var(--gold2);direction:rtl;margin-bottom:.4rem;text-shadow:0 0 22px rgba(216,180,106,0.3)}
+.allah-sub{font:600 clamp(.72rem,2.4vw,.9rem) var(--cin);letter-spacing:.26em;color:var(--gold);line-height:1.7;text-transform:uppercase}
+.grandparents-box{margin-top:1.8rem;padding-top:1.6rem;border-top:1px solid #d8b46a44}
+.gp-label{font:400 clamp(.75rem,2.5vw,.92rem) var(--cin);letter-spacing:.22em;color:var(--cream);opacity:.88;text-transform:uppercase}
+.gp-names{font:600 clamp(1rem,3.6vw,1.35rem) var(--cin);letter-spacing:.14em;color:var(--gold2);margin-top:.55rem;line-height:1.5}
+.from-pill{display:inline-block;margin-top:1.6rem;padding:.7rem 1.4rem;border:1px solid #d8b46a66;border-radius:999px;background:rgba(0,0,0,0.35);font:600 clamp(.7rem,2.3vw,.85rem) var(--cin);letter-spacing:.16em;color:var(--gold2);text-transform:uppercase}
+
+/* ORNATE ISLAMIC COUPLE ARCH CARDS */
+.invite-lead{font:600 clamp(.78rem,2.8vw,.98rem) var(--cin);letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem}
+.couple-stage{display:grid;grid-template-columns:1fr auto 1fr;gap:1.2rem;align-items:center;max-width:780px;margin:0 auto}
+.arch-card{border:1px solid #d8b46a66;background:radial-gradient(circle at 50% 25%,rgba(216,180,106,0.12),rgba(0,0,0,0.45) 75%);border-radius:160px 160px 26px 26px;padding:2.2rem 1.4rem 2rem;position:relative;box-shadow:0 14px 36px rgba(0,0,0,0.5);overflow:hidden}
+.arch-card::before{content:"";position:absolute;inset:8px;border:1px dashed #d8b46a55;border-radius:152px 152px 20px 20px;pointer-events:none}
+.monogram-svg{width:128px;height:142px;margin:0 auto .8rem;display:block;filter:drop-shadow(0 6px 18px rgba(216,180,106,0.28))}
+.arch-card h3{font:400 clamp(2.1rem,6vw,2.7rem)/1.1 var(--script);color:var(--gold2);margin:.3rem 0 .6rem}
+.parentage{font:600 clamp(.72rem,2.2vw,.84rem)/1.65 var(--cin);letter-spacing:.14em;color:var(--cream);opacity:.92;text-transform:uppercase}
+.weds-medallion{width:68px;height:68px;border-radius:50%;border:1px solid var(--gold);background:radial-gradient(circle,var(--wine),var(--deep));display:flex;align-items:center;justify-content:center;font:italic 600 1.25rem var(--serif);color:var(--gold2);box-shadow:0 0 24px rgba(216,180,106,0.35);margin:0 auto}
+@media(max-width:700px){
+  .couple-stage{grid-template-columns:1fr;gap:1rem;max-width:400px}
+  .weds-medallion{width:58px;height:58px}
+}
+
+/* COUNTDOWN */
+#cdh{font:600 clamp(1.15rem,5.2vw,1.9rem) var(--cin);letter-spacing:.16em;margin-top:.4rem}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;max-width:480px;margin:2rem auto}
+.cd div{border:1px solid #d8b46a77;padding:1rem .4rem;background:#0004;border-radius:18px}
+.cd b{display:block;font:600 clamp(1.6rem,8vw,2.6rem) var(--cin);color:var(--gold2)}
+.cd small{font:.6rem var(--cin);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+
+/* PROGRAMME TIMELINE */
+.tl{position:relative;max-width:650px;margin:2rem auto;text-align:left;padding-left:2.1rem}
+.tl::before{content:"";position:absolute;left:7px;top:0;bottom:0;width:1px;background:linear-gradient(var(--gold),#0000);transform-origin:top;transform:scaleY(0);transition:transform 2s}
+.tl.in::before{transform:none}
+.ev{position:relative;margin-bottom:2rem;padding:1.6rem 1.5rem;border:1px solid #d8b46a66;background:linear-gradient(135deg,rgba(0,0,0,0.45),rgba(74,7,18,0.28));border-radius:22px;box-shadow:0 10px 28px rgba(0,0,0,0.35)}
+.ev::before{content:"";position:absolute;left:-2.1rem;top:1.8rem;width:15px;height:15px;transform:rotate(45deg);background:var(--gold);box-shadow:0 0 12px var(--gold)}
+.ev-tag{display:inline-block;font:600 .68rem var(--cin);letter-spacing:.22em;color:var(--deep);background:var(--gold2);padding:.22rem .75rem;border-radius:999px;text-transform:uppercase;margin-bottom:.7rem}
+.ev h3{font:600 clamp(1.2rem,4vw,1.45rem) var(--cin);color:var(--gold2);letter-spacing:.12em;margin-bottom:.5rem}
+.ev p{opacity:.95;line-height:1.7}
+.ev .ev-venue{margin-top:.55rem;padding-top:.55rem;border-top:1px solid #d8b46a33;color:var(--gold2);font-size:1.05rem}
+.ev a{display:inline-block;margin-top:.65rem;color:var(--gold2);font:600 .75rem var(--cin);letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--gold)}
+
+/* SACRED QURANIC BLESSING & DUA SHOWCASE */
+.dua-frame{border:1px solid #d8b46a77;background:radial-gradient(ellipse at top,rgba(216,180,106,0.14),rgba(0,0,0,0.5) 75%);border-radius:28px;padding:clamp(2rem,6vw,3.4rem) clamp(1.3rem,5vw,2.6rem);position:relative;box-shadow:0 18px 46px rgba(0,0,0,0.5)}
+.dua-frame::after{content:"";position:absolute;inset:10px;border:1px solid #d8b46a33;border-radius:20px;pointer-events:none}
+.arabic-verse{font:700 clamp(1.45rem,5.5vw,2.2rem)/1.9 var(--arabic);color:var(--gold2);direction:rtl;margin:1rem 0;text-shadow:0 2px 14px rgba(0,0,0,0.7)}
+.verse-trans{font:italic 400 clamp(1.08rem,3.4vw,1.28rem)/1.7 var(--serif);color:var(--cream);max-width:600px;margin:0 auto .6rem}
+.verse-ref{font:600 .72rem var(--cin);letter-spacing:.26em;color:var(--gold);text-transform:uppercase}
+.sunnah-divider{margin:1.8rem auto;width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.sunnah-arabic{font:700 clamp(1.25rem,4.8vw,1.8rem)/1.8 var(--arabic);color:var(--gold2);direction:rtl;margin-bottom:.45rem}
+.sunnah-trans{font:400 1.02rem/1.6 var(--serif);color:var(--cream);opacity:.9}
+
+/* VENUES GRID */
+.venue-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin:2rem auto}
+.venue-card{border:1px solid #d8b46a66;background:rgba(0,0,0,0.36);border-radius:22px;padding:1.8rem 1.4rem;display:flex;flex-direction:column;justify-content:space-between;gap:1rem}
+.venue-card h3{font:600 1.1rem var(--cin);color:var(--gold2);letter-spacing:.16em;text-transform:uppercase}
+.venue-card .v-date{font:600 .78rem var(--cin);letter-spacing:.15em;color:var(--gold)}
+.venue-card p{font-size:1.08rem;line-height:1.55}
+@media(max-width:640px){.venue-grid{grid-template-columns:1fr}}
+
+/* RSVP & DUA FORM */
+form{display:grid;gap:1.2rem;max-width:480px;margin:2rem auto;text-align:left;background:#0004;border:1px solid #d8b46a55;border-radius:24px;padding:2rem 1.5rem}
+label{font:.75rem var(--cin);letter-spacing:.2em;color:var(--gold)}
+input,select,textarea{width:100%;font:1.1rem var(--serif);color:var(--cream);background:#0005;border:1px solid #d8b46a77;padding:.9rem;min-height:48px;margin-top:.3rem;border-radius:12px}
+select option{color:#000}
+#rmsg{min-height:1.6em;color:var(--gold2);text-align:center}
+
+/* FLOATING FANOOS / DUA LANTERNS */
+.lantern{position:fixed;bottom:-44px;width:24px;height:34px;border-radius:45% 45% 28% 28%;background:radial-gradient(#fff6c4,#f3a53a 70%,#b86d14);box-shadow:0 0 24px #f3a53a;animation:fl 7.5s ease-in forwards;z-index:40;pointer-events:none}
+.lantern::before{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:10px;height:5px;border-radius:4px 4px 0 0;background:var(--gold2)}
+@keyframes fl{to{transform:translate(var(--x),-112svh);opacity:0}}
+
+.fin .names{font-size:clamp(2.8rem,14vw,6.2rem)}
+.family-sign{font:600 clamp(1.1rem,4.4vw,1.6rem) var(--cin);letter-spacing:.24em;color:var(--gold2);text-transform:uppercase;margin-top:.8rem}
+.host-line{font:600 clamp(.75rem,2.6vw,.92rem) var(--cin);letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-top:1.1rem;opacity:.92}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body class="lock">
+
+<!-- ENTRANCE SCREEN -->
+<div id="intro" role="dialog" aria-label="Invitation entrance">
+  <button id="cue" aria-label="Tap to enter the invitation"><i></i><span id="cuet">Tap to Open</span></button>
+  <button id="skip">Skip Animation</button>
+</div>
+
+<main>
+<!-- HERO SECTION WITH VIDEO -->
+<header id="hero">
+  <video id="bg-video" playsinline muted preload="auto" aria-hidden="true">
+    <source src="https://www.image2url.com/r2/default/videos/1792998754447-e30c913b-ee52-4c60-ba94-db4acb1f708e.mp4#t=0.1" type="video/mp4">
+  </video>
+
+  <div id="hero-content">
+    <p class="bismillah-hero rv" style="--d:1" lang="ar">بسم الله الرحمن الرحيم</p>
+    <p class="eyebrow rv" style="--d:2" id="sub"></p>
+    <h1 class="names rv" style="--d:3" id="names"></h1>
+    <p class="date rv" style="--d:4" id="hdate"></p>
+    <a class="btn rv" style="--d:5" id="std" href="#">Save the Date</a>
+  </div>
+  <span class="scrollcue">SCROLL ↓</span>
+</header>
+
+<!-- BISMILLAH & BLESSINGS SECTION -->
+<section class="alt">
+  <div class="wrap">
+    <div class="blessing-card rv">
+      <svg viewBox="0 0 120 46" style="width:92px;height:36px;margin:0 auto .8rem;display:block" aria-hidden="true">
+        <path d="M64 8a15 15 0 1 0 11 25 12 12 0 1 1-11-25z" fill="#f3dca0"/>
+        <polygon points="73,13 74.8,17.2 79.4,17.6 75.9,20.6 77,25 73,22.6 69,25 70.1,20.6 66.6,17.6 71.2,17.2" fill="#d8b46a"/>
+        <line x1="6" y1="23" x2="36" y2="23" stroke="#d8b46a" stroke-opacity=".6"/>
+        <line x1="84" y1="23" x2="114" y2="23" stroke="#d8b46a" stroke-opacity=".6"/>
+      </svg>
+      <p class="bismillah-lg" lang="ar">بسم الله الرحمن الرحيم</p>
+      <p class="allah-sub">IN THE NAME OF ALLAH<br>THE MOST BENEFICENT AND MOST MERCIFUL</p>
+
+      <div class="grandparents-box">
+        <p class="gp-label">WITH THE GRACIOUS BLESSINGS OF OUR GRAND PARENTS</p>
+        <p class="gp-names" id="gpNames"></p>
+      </div>
+
+      <span class="from-pill" id="fromLine"></span>
+    </div>
+  </div>
+</section>
+
+<!-- THE NIKAH — BRIDE & GROOM ORNATE ARCH MEDALLIONS -->
+<section>
+  <div class="wrap">
+    <p class="invite-lead rv">YOU ARE CORDIALLY INVITED TO THE NIKAH OF</p>
+    <div class="couple-stage rv">
+      <!-- GROOM ARCH CARD -->
+      <article class="arch-card">
+        <svg class="monogram-svg" viewBox="0 0 140 156" role="img" aria-label="Islamic arch monogram for Ashad">
+          <defs>
+            <linearGradient id="goldGradA" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f3dca0"/>
+              <stop offset="55%" stop-color="#d8b46a"/>
+              <stop offset="100%" stop-color="#a67c33"/>
+            </linearGradient>
+          </defs>
+          <path d="M70 10 C55 24 22 36 22 72 L22 144 L118 144 L118 72 C118 36 85 24 70 10 Z" fill="rgba(74,7,18,0.45)" stroke="url(#goldGradA)" stroke-width="2"/>
+          <path d="M70 20 C58 32 30 42 30 74 L30 136 L110 136 L110 74 C110 42 82 32 70 20 Z" fill="none" stroke="#d8b46a" stroke-opacity=".55" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M72 34a7 7 0 1 0 5 11.5 5.5 5.5 0 1 1-5-11.5z" fill="#f3dca0"/>
+          <text x="70" y="106" text-anchor="middle" fill="url(#goldGradA)" font-family="Cinzel, Georgia, serif" font-size="48" font-weight="600">A</text>
+          <circle cx="70" cy="124" r="2.2" fill="#f3dca0"/>
+          <line x1="46" y1="124" x2="62" y2="124" stroke="#d8b46a" stroke-opacity=".6"/>
+          <line x1="78" y1="124" x2="94" y2="124" stroke="#d8b46a" stroke-opacity=".6"/>
+        </svg>
+        <h3 id="cGroomName">Ashad Mehmood</h3>
+        <p class="parentage" id="cGroomParents"></p>
+      </article>
+
+      <!-- WEDS MEDALLION -->
+      <div class="weds-medallion" aria-hidden="true">weds</div>
+
+      <!-- BRIDE ARCH CARD -->
+      <article class="arch-card">
+        <svg class="monogram-svg" viewBox="0 0 140 156" role="img" aria-label="Islamic arch monogram for Rehana">
+          <defs>
+            <linearGradient id="goldGradR" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f3dca0"/>
+              <stop offset="55%" stop-color="#d8b46a"/>
+              <stop offset="100%" stop-color="#a67c33"/>
+            </linearGradient>
+          </defs>
+          <path d="M70 10 C55 24 22 36 22 72 L22 144 L118 144 L118 72 C118 36 85 24 70 10 Z" fill="rgba(74,7,18,0.45)" stroke="url(#goldGradR)" stroke-width="2"/>
+          <path d="M70 20 C58 32 30 42 30 74 L30 136 L110 136 L110 74 C110 42 82 32 70 20 Z" fill="none" stroke="#d8b46a" stroke-opacity=".55" stroke-width="1" stroke-dasharray="3 3"/>
+          <path d="M72 34a7 7 0 1 0 5 11.5 5.5 5.5 0 1 1-5-11.5z" fill="#f3dca0"/>
+          <text x="70" y="106" text-anchor="middle" fill="url(#goldGradR)" font-family="Cinzel, Georgia, serif" font-size="48" font-weight="600">R</text>
+          <circle cx="70" cy="124" r="2.2" fill="#f3dca0"/>
+          <line x1="46" y1="124" x2="62" y2="124" stroke="#d8b46a" stroke-opacity=".6"/>
+          <line x1="78" y1="124" x2="94" y2="124" stroke="#d8b46a" stroke-opacity=".6"/>
+        </svg>
+        <h3 id="cBrideName">Rehana Khan</h3>
+        <p class="parentage" id="cBrideParents"></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTDOWN SECTION -->
+<section class="alt">
+  <div class="wrap">
+    <p class="eyebrow rv">Counting down to the Nikah</p>
+    <h2 class="rv" id="cdh"></h2>
+    <div class="cd rv" id="cd" aria-live="off">
+      <div><b id="d">–</b><small>Days</small></div>
+      <div><b id="h">–</b><small>Hours</small></div>
+      <div><b id="m">–</b><small>Min</small></div>
+      <div><b id="s">–</b><small>Sec</small></div>
+    </div>
+    <p id="cdm" class="rv"></p>
+  </div>
+</section>
+
+<!-- PROGRAMME INSHA ALLAH -->
+<section>
+  <div class="wrap">
+    <h2 class="rv">Programme Insha Allah</h2>
+    <i class="orn"></i>
+    <div class="tl" id="tl"></div>
+  </div>
+</section>
+
+<!-- SACRED QURANIC BLESSING & SUNNAH DUA -->
+<section class="alt">
+  <div class="wrap">
+    <h2 class="rv">Dua &amp; Blessings</h2>
+    <i class="orn"></i>
+    <div class="dua-frame rv">
+      <svg viewBox="0 0 160 54" style="width:130px;height:44px;margin:0 auto .4rem;display:block" aria-hidden="true">
+        <line x1="80" y1="0" x2="80" y2="12" stroke="#d8b46a" stroke-width="1.2"/>
+        <path d="M74 12 L86 12 L90 22 L85 40 L75 40 L70 22 Z" fill="rgba(243,220,160,0.18)" stroke="#f3dca0" stroke-width="1.3"/>
+        <circle cx="80" cy="26" r="3.5" fill="#f3dca0"/>
+        <line x1="16" y1="26" x2="58" y2="26" stroke="#d8b46a" stroke-opacity=".5"/>
+        <line x1="102" y1="26" x2="144" y2="26" stroke="#d8b46a" stroke-opacity=".5"/>
+      </svg>
+
+      <p class="arabic-verse" lang="ar">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
+      <p class="verse-trans">“And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts.”</p>
+      <p class="verse-ref">Surah Ar-Rum · 30:21</p>
+
+      <div class="sunnah-divider"></div>
+
+      <p class="sunnah-arabic" lang="ar">بَارَكَ اللَّهُ لَكَ وَبَارَكَ عَلَيْكَ وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</p>
+      <p class="sunnah-trans">May Allah bless you, shower His blessings upon you, and join you together in goodness.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VENUES & CALENDAR SECTION -->
+<section>
+  <div class="wrap">
+    <h2 class="rv">Venues</h2>
+    <i class="orn"></i>
+    <div class="venue-grid rv" id="venueGrid"></div>
+    <button id="ics" class="rv" style="margin-top:.6rem">Add Both Events to Calendar</button>
+  </div>
+</section>
+
+<!-- RSVP & DUA LANTERN SECTION -->
+<section class="alt">
+  <div class="wrap">
+    <h2 class="rv">Send Your Duas &amp; RSVP</h2>
+    <i class="orn"></i>
+    <form id="rsvp" class="rv">
+      <div>
+        <label for="rn">Your Name</label>
+        <input id="rn" required autocomplete="name" placeholder="Your full name">
+      </div>
+      <div>
+        <label for="rm">Dua / Message (Optional)</label>
+        <textarea id="rm" rows="3" placeholder="Write your duas &amp; wishes for Ashad &amp; Rehana..."></textarea>
+      </div>
+      <button type="submit">Send RSVP on WhatsApp</button>
+      <button type="button" id="wish" style="margin-top:.4rem;background:transparent;border:1px solid var(--gold);color:var(--gold2)">✦ Release a Dua Lantern</button>
+      <p id="rmsg" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER SECTION -->
+<section class="fin" style="background:radial-gradient(ellipse at 50% 40%,#6b1424,var(--deep) 70%)">
+  <div class="wrap">
+    <p class="eyebrow rv" id="footAwait"></p>
+    <p class="names rv" id="fnames"></p>
+    <p class="date rv" id="fdate"></p>
+    <i class="orn"></i>
+    <p class="family-sign rv" id="fam"></p>
+    <p class="host-line rv" id="footFrom"></p>
+  </div>
+</section>
+</main>
+
+<script>
+/* ===== CLIENT CONFIG (ASHAD WEDS REHANA) ===== */
+const WEDDING_CONFIG = {
+  groomShort: "Ashad",
+  brideShort: "Rehana",
+  groomFull: "Ashad Mehmood",
+  groomParents: "(S/O. LATE MEHMOOD QURESHI & AYSHA QURESHI)",
+  brideFull: "Rehana Khan",
+  brideParents: "(D/O. ABDUL KADIR KHAN & GULSHAD KHAN)",
+  grandParents: "LATE ANWAR UL HAQ QURESHI & LATE NASEEM BANO",
+  fromLine: "FROM: MRS. AYSHA & LATE MEHMOOD QURESHI",
+  heroSubtitle: "Wedding Invitation",
+  heroDateDisplay: "SUNDAY 29 NOV. 2026",
+  countdownDateTime: "2026-11-28T13:30:00+05:30",
+  countdownHeading: "SATURDAY, 28 NOVEMBER 2026",
+  timeZone: "Asia/Kolkata",
+  footerAwait: "WE EAGERLY AWAIT YOUR PRESENCE",
+  familiesLine: "Qureshi Family",
+  rsvpWhatsApp: "918518054004",
+  rsvpEndpoint: "",
+  events: [
+    {
+      tag: "Day 1 · Nikah",
+      name: "NIKAH",
+      date: "2026-11-28",
+      dateDisplay: "SATURDAY, 28 NOVEMBER 2026",
+      time: "13:30",
+      timeDisplay: "AFTER NAMAZ-E-ZUHR",
+      venue: "KAMLA RESORT, SHUJALPUR",
+      map: "https://www.google.com/maps/search/?api=1&query=Kamla+Resort+Shujalpur"
+    },
+    {
+      tag: "Day 2 · Walima",
+      name: "Dawat-E-Walima",
+      date: "2026-11-29",
+      dateDisplay: "SUNDAY, 29 NOVEMBER 2026",
+      time: "20:00",
+      timeDisplay: "8:00 PM ONWARDS",
+      venue: "GOPIKISHAN GARDEN, INDORE ROAD, HARDA (M.P.)",
+      map: "https://www.google.com/maps/search/?api=1&query=Gopikishan+Garden+Indore+Road+Harda+MP"
+    }
+  ]
+};
+/* ============================================= */
+
+const C = WEDDING_CONFIG;
+const $ = id => document.getElementById(id);
+const RM = matchMedia("(prefers-reduced-motion:reduce)").matches;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+// Populate Text Content
+$("sub").textContent = C.heroSubtitle;
+$("names").innerHTML = `<span>${esc(C.groomShort)}</span><em>weds</em><span>${esc(C.brideShort)}</span>`;
+$("fnames").innerHTML = `${esc(C.groomShort)} <em style="display:inline;font-style:italic">weds</em> ${esc(C.brideShort)}`;
+$("hdate").textContent = $("fdate").textContent = C.heroDateDisplay;
+$("cdh").textContent = C.countdownHeading;
+
+$("gpNames").textContent = C.grandParents;
+$("fromLine").textContent = C.fromLine;
+$("cGroomName").textContent = C.groomFull;
+$("cGroomParents").textContent = C.groomParents;
+$("cBrideName").textContent = C.brideFull;
+$("cBrideParents").textContent = C.brideParents;
+
+$("footAwait").textContent = C.footerAwait;
+$("fam").textContent = C.familiesLine;
+$("footFrom").textContent = C.fromLine;
+
+// Populate Programme Timeline
+$("tl").innerHTML = C.events.map(e => `
+  <article class="ev rv">
+    <span class="ev-tag">${esc(e.tag)}</span>
+    <h3>${esc(e.name)}</h3>
+    <p><strong>${esc(e.dateDisplay)}</strong><br>${esc(e.timeDisplay)}</p>
+    <p class="ev-venue">VENUE: ${esc(e.venue)}</p>
+    ${e.map ? `<a href="${esc(e.map)}" target="_blank" rel="noopener">Get Directions →</a>` : ""}
+  </article>
+`).join("");
+
+// Populate Venue Cards
+$("venueGrid").innerHTML = C.events.map(e => `
+  <div class="venue-card">
+    <div>
+      <h3>${esc(e.name)}</h3>
+      <p class="v-date" style="margin:.4rem 0 .8rem">${esc(e.dateDisplay)}<br>${esc(e.timeDisplay)}</p>
+      <p>${esc(e.venue)}</p>
+    </div>
+    ${e.map ? `<a class="btn" href="${esc(e.map)}" target="_blank" rel="noopener">Get Directions</a>` : ""}
+  </div>
+`).join("");
+
+// Countdown Timer
+const T = new Date(C.countdownDateTime);
+function tick() {
+  const ms = T - Date.now();
+  if (isNaN(T)) return;
+  if (ms <= 0) {
+    $("cd").style.display = "none";
+    $("cdm").textContent = "Alhamdulillah — The celebration has begun! Thank you for joining us.";
+    return;
+  }
+  const f = (id, v) => $(id).textContent = String(v).padStart(2, "0");
+  f("d", Math.floor(ms / 864e5));
+  f("h", Math.floor(ms / 36e5 % 24));
+  f("m", Math.floor(ms / 6e4 % 60));
+  f("s", Math.floor(ms / 1e3 % 60));
+}
+tick();
+setInterval(() => { if (!document.hidden) tick(); }, 1000);
+
+// Calendar (.ics) Generator
+const p2 = n => String(n).padStart(2, "0");
+$("ics").onclick = () => {
+  const L = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Ashad weds Rehana//EN"];
+  C.events.forEach((e, i) => {
+    const startStr = e.date.replace(/-/g, "") + "T" + e.time.replace(":", "") + "00";
+    const [h, m] = e.time.split(":").map(Number);
+    const eh = Math.min(23, h + 3);
+    const endStr = e.date.replace(/-/g, "") + "T" + p2(eh) + p2(m) + "00";
+    L.push(
+      "BEGIN:VEVENT",
+      `UID:${i}-${startStr}@ashad-rehana`,
+      "DTSTAMP:" + new Date().toISOString().replace(/[-:]|\.\d+/g, ""),
+      `DTSTART;TZID=${C.timeZone}:${startStr}`,
+      `DTEND;TZID=${C.timeZone}:${endStr}`,
+      `SUMMARY:${e.name} – ${C.groomShort} weds ${C.brideShort}`,
+      `DESCRIPTION:${e.timeDisplay}`,
+      `LOCATION:${(e.venue || "").replace(/,/g, "\\,")}`,
+      "END:VEVENT"
+    );
+  });
+  L.push("END:VCALENDAR");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([L.join("\r\n")], { type: "text/calendar" }));
+  a.download = "Ashad-weds-Rehana.ics";
+  a.click();
+};
+$("std").onclick = e => { e.preventDefault(); $("ics").click(); };
+
+// RSVP via WhatsApp & Dua Lanterns
+$("rsvp").onsubmit = async e => {
+  e.preventDefault();
+  const name = $("rn").value.trim();
+  const msg = $("rm").value.trim();
+  const t = `Assalamu Alaikum!\nRSVP for ${C.groomShort} weds ${C.brideShort}\nName: ${name}${msg ? `\nDua/Message: ${msg}` : ""}`;
+  const o = $("rmsg");
+  if (C.rsvpEndpoint) {
+    try {
+      const r = await fetch(C.rsvpEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, message: msg })
+      });
+      o.textContent = r.ok ? "JazakAllah Khair — Your RSVP has been received." : "Sorry, the RSVP could not be sent. Please try again.";
+    } catch {
+      o.textContent = "Network error — RSVP not sent.";
+    }
+  } else if (C.rsvpWhatsApp) {
+    const waUrl = `https://wa.me/${C.rsvpWhatsApp.replace(/\D/g, "")}?text=${encodeURIComponent(t)}`;
+    window.open(waUrl, "_blank", "noopener");
+    o.textContent = "Opening WhatsApp — please tap send to confirm your RSVP.";
+  } else {
+    o.textContent = "JazakAllah Khair for your warm wishes!";
+  }
+};
+
+$("wish").onclick = () => {
+  for (let i = 0; i < 8; i++) {
+    const l = document.createElement("i");
+    l.className = "lantern";
+    l.style.left = (10 + Math.random() * 80) + "vw";
+    l.style.setProperty("--x", (Math.random() * 80 - 40) + "px");
+    l.style.animationDelay = i * 0.25 + "s";
+    document.body.appendChild(l);
+    setTimeout(() => l.remove(), 9000);
+  }
+  $("rmsg").textContent = "Ameen — Your dua lantern has been released ✦";
+};
+
+// Video Entrance & Reveal Animation
+const intro = $("intro");
+const bgVideo = $("bg-video");
+const heroContent = $("hero-content");
+let started = false;
+
+function startExperience(skip = false) {
+  if (started) return;
+  started = true;
+
+  intro.classList.add("done");
+  document.body.classList.remove("lock");
+
+  if (skip || RM) {
+    bgVideo.currentTime = bgVideo.duration || 8;
+    bgVideo.pause();
+    showHeroText();
+  } else {
+    bgVideo.play().catch(() => {
+      showHeroText();
+    });
+
+    setTimeout(() => {
+      showHeroText();
+    }, 3800);
+
+    bgVideo.onended = () => {
+      bgVideo.pause();
+    };
+  }
+}
+
+function showHeroText() {
+  heroContent.classList.add("show");
+  setTimeout(() => {
+    reveal();
+    document.querySelectorAll("#hero-content .rv").forEach(el => el.classList.add("in"));
+  }, 100);
+  try { sessionStorage.setItem("seen_ar", "1"); } catch (e) {}
+}
+
+$("cue").onclick = () => startExperience(false);
+$("skip").onclick = e => { e.stopPropagation(); startExperience(true); };
+
+function reveal() {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }), { threshold: 0.15 });
+  document.querySelectorAll(".rv, .tl").forEach(el => {
+    if (!el.closest("#hero-content")) io.observe(el);
+  });
+}
+
+if ((() => { try { return sessionStorage.getItem("seen_ar"); } catch (e) {} })() === "1") {
+  intro.classList.add("done");
+  document.body.classList.remove("lock");
+  bgVideo.addEventListener("loadeddata", () => { bgVideo.currentTime = 999; });
+  showHeroText();
+} else {
+  $("cue").focus({ preventScroll: true });
+}
+</script>
+</body>
+</html>
